@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PetShop MRM</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="page-shell">
+    <header class="site-header">
+      <nav class="topbar">
+        <a class="brand" href="#/loja">
+          <span class="brand-mark">MRM</span>
+          <span class="brand-copy">
+            <strong>PetShop MRM</strong>
+            <span>Racao, higiene e acessorios</span>
+          </span>
+        </a>
+
+        <div class="topbar-actions">
+          <button class="status-pill" type="button" id="connectionBadge">Conectando...</button>
+          <button class="nav-button active" type="button" data-view-target="store">Loja</button>
+          <button class="nav-button" type="button" data-view-target="admin">Admin</button>
+        </div>
+      </nav>
+    </header>
+
+    <main class="app-main">
+      <section class="view store-view" data-view="store">
+        <section class="hero">
+          <div class="hero-copy">
+            <p class="eyebrow">Loja de petshop</p>
+            <h1>Tudo para cuidar melhor do seu pet.</h1>
+            <p class="hero-text">
+              Encontre produtos por categoria, veja detalhes, compare valores e mantenha o catalogo sempre atualizado pelo painel admin.
+            </p>
+
+            <div class="hero-actions">
+              <a class="primary-button" href="#catalogo">Ver catalogo</a>
+              <button class="secondary-button" type="button" data-view-target="admin">Cadastrar produtos</button>
+            </div>
+
+            <div class="stats-grid">
+              <article>
+                <strong id="heroCategoryCount">0</strong>
+                <span>categorias</span>
+              </article>
+              <article>
+                <strong id="heroProductCount">0</strong>
+                <span>produtos</span>
+              </article>
+              <article>
+                <strong id="heroHighlight">Loja pronta</strong>
+                <span>catalogo atualizado</span>
+              </article>
+            </div>
+          </div>
+
+          <aside class="hero-panel">
+            <p class="eyebrow">Destaque</p>
+            <strong id="heroFeaturedName">Nenhum produto cadastrado</strong>
+            <span id="heroFeaturedDescription">Use a area admin para criar sua primeira categoria e seu primeiro produto.</span>
+            <div class="hero-feature-tags">
+              <span>Produtos selecionados</span>
+              <span>Busca rapida</span>
+              <span>Estoque visivel</span>
+            </div>
+          </aside>
+        </section>
+
+        <section class="catalog-shell" id="catalogo">
+          <div class="catalog-toolbar">
+            <div>
+              <p class="eyebrow">Catalogo</p>
+              <h2>Compre por categoria</h2>
+            </div>
+
+            <label class="search-box">
+              <span>Buscar produto</span>
+              <input type="search" id="searchInput" placeholder="Racao, shampoo, brinquedo...">
+            </label>
+          </div>
+
+          <div class="category-strip" id="categoryFilters"></div>
+          <div class="products-grid" id="productGrid"></div>
+        </section>
+      </section>
+
+      <section class="view product-view hidden" data-view="product">
+        <div class="breadcrumb-row">
+          <button class="back-link" type="button" id="backToStore">Voltar para a loja</button>
+          <span id="productBreadcrumb">Produto</span>
+        </div>
+
+        <div class="product-detail-shell">
+          <section class="product-gallery-card">
+            <div class="product-image-stage">
+              <img id="detailImage" alt="">
+            </div>
+          </section>
+
+          <section class="product-info-card">
+            <p class="detail-category" id="detailCategory">Categoria</p>
+            <h2 id="detailName">Produto</h2>
+            <p class="detail-description" id="detailDescription"></p>
+
+            <div class="detail-price-block">
+              <span id="detailOriginalPrice" class="detail-original-price"></span>
+              <strong id="detailCurrentPrice" class="detail-current-price"></strong>
+            </div>
+
+            <div class="detail-meta-grid">
+              <article>
+                <span>Estoque</span>
+                <strong id="detailStock"></strong>
+              </article>
+              <article>
+                <span>Status</span>
+                <strong id="detailStatus"></strong>
+              </article>
+            </div>
+
+            <div class="detail-actions">
+              <button class="primary-button" type="button" id="detailWhatsApp">Chamar no WhatsApp</button>
+              <button class="secondary-button" type="button" id="detailAdminShortcut">Editar no admin</button>
+            </div>
+          </section>
+        </div>
+      </section>
+
+      <section class="view admin-view hidden" data-view="admin">
+        <div class="admin-header">
+          <div>
+            <p class="eyebrow">Painel admin</p>
+            <h2>Gerencie categorias e produtos</h2>
+            <p class="admin-text">Crie categorias, cadastre produtos e mantenha o catalogo da loja organizado.</p>
+          </div>
+        </div>
+
+        <div class="admin-grid">
+          <section class="panel-card">
+            <div class="panel-head">
+              <h3>Nova categoria</h3>
+              <span id="categoryTotalAdmin">0 cadastradas</span>
+            </div>
+
+            <form id="categoryForm" class="form-grid">
+              <label>
+                <span>Nome da categoria</span>
+                <input type="text" id="categoryName" placeholder="Ex: Racao">
+              </label>
+
+              <label>
+                <span>Descricao</span>
+                <textarea id="categoryDescription" rows="4" placeholder="Para filhotes, higiene, brinquedos..."></textarea>
+              </label>
+
+              <button class="primary-button full-width" type="submit">Adicionar categoria</button>
+            </form>
+          </section>
+
+          <section class="panel-card">
+            <div class="panel-head">
+              <h3>Novo produto</h3>
+              <span id="productTotalAdmin">0 cadastrados</span>
+            </div>
+
+            <form id="productForm" class="form-grid">
+              <label>
+                <span>Nome do produto</span>
+                <input type="text" id="productName" placeholder="Ex: Shampoo pele sensivel">
+              </label>
+
+              <label>
+                <span>Categoria</span>
+                <select id="productCategory"></select>
+              </label>
+
+              <label>
+                <span>Preco</span>
+                <input type="number" id="productPrice" min="0" step="0.01" placeholder="0.00">
+              </label>
+
+              <label>
+                <span>Preco promocional</span>
+                <input type="number" id="productSalePrice" min="0" step="0.01" placeholder="0.00">
+              </label>
+
+              <label>
+                <span>Estoque</span>
+                <input type="number" id="productStock" min="0" step="1" placeholder="0">
+              </label>
+
+              <label>
+                <span>URL da imagem</span>
+                <input type="url" id="productImage" placeholder="https://...">
+              </label>
+
+              <label class="full-span">
+                <span>Descricao</span>
+                <textarea id="productDescription" rows="4" placeholder="Detalhes do produto, tamanho, uso, beneficios..."></textarea>
+              </label>
+
+              <button class="primary-button full-width" type="submit">Adicionar produto</button>
+            </form>
+          </section>
+        </div>
+
+        <div class="admin-list-grid">
+          <section class="panel-card">
+            <div class="panel-head">
+              <h3>Categorias cadastradas</h3>
+            </div>
+            <div id="adminCategoryList" class="stack-list"></div>
+          </section>
+
+          <section class="panel-card">
+            <div class="panel-head">
+              <h3>Produtos cadastrados</h3>
+            </div>
+            <div id="adminProductList" class="stack-list"></div>
+          </section>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <template id="productCardTemplate">
+    <article class="product-card">
+      <button class="product-card-link" type="button">
+        <div class="product-image-wrap">
+          <img alt="">
+        </div>
+        <div class="product-card-body">
+          <span class="product-category"></span>
+          <h3></h3>
+          <p class="product-card-description"></p>
+          <div class="price-stack">
+            <span class="product-original-price"></span>
+            <strong class="product-current-price"></strong>
+          </div>
+        </div>
+      </button>
+    </article>
+  </template>
+
+  <script src="app.js"></script>
+</body>
+</html>
